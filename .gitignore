@@ -1,0 +1,33 @@
+# 依赖（体积大、可由 npm install 重建，且含手动下载的 Electron 内核）
+node_modules/
+
+# macOS 系统垃圾文件
+.DS_Store
+._*
+
+# Claude Code 本地配置（仅本机有效，不应共享）
+.claude/
+
+# 将来 electron-builder 打包输出
+dist/
+dist-offline/
+dist-portable/
+out/
+build/
+
+# 日志
+*.log
+npm-debug.log*
+
+# UI 离屏验证产生的临时文件
+__verify_*
+
+# OCR 离线语言包（体积大、可重新下载，不入库；离线版打包前需先下载到此）
+langs/
+
+# 宣传片成片和渲染帧（本机保留，由 promo/scripts 可重新生成）
+promo/export/*.mp4
+promo/export/*.wav
+promo/export/*.png
+promo/export/*.jpg
+promo/export/screens/

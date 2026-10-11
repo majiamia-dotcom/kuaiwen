@@ -1,0 +1,141 @@
+{
+  "name": "doc-search",
+  "version": "1.1.1",
+  "description": "本地文档内容搜索器 - 搜的是文件里的字，不是文件名",
+  "homepage": "https://kuaiwen.local",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "promo": "QUICKDOCS_DEMO=1 electron .",
+    "promo:video": "electron promo/scripts/render_promo_videos.js",
+    "test": "node --test \"test/*.test.js\"",
+    "verify:assets": "node scripts/verify-build-assets.js",
+    "predist": "npm run verify:assets",
+    "predist:mac": "npm run verify:assets",
+    "predist:win": "npm run verify:assets",
+    "predist:linux": "npm run verify:assets",
+    "dist": "node scripts/build.js",
+    "dist:mac": "node scripts/build.js --mac",
+    "dist:win": "node scripts/build.js --win --x64",
+    "dist:linux": "node scripts/build.js --linux"
+  },
+  "author": "majiamia-dotcom",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "44.1.1",
+    "electron-builder": "26.15.3"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.65",
+    "jszip": "^3.10.1",
+    "pdfjs-dist": "6.3.289",
+    "tesseract.js": "^5.1.0",
+    "word-extractor": "^1.0.4"
+  },
+  "build": {
+    "appId": "com.kuaiwen.docsearch",
+    "productName": "快文",
+    "copyright": "Copyright © 2026 majiamia-dotcom",
+    "npmRebuild": false,
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    },
+    "extraResources": [
+      {
+        "from": "langs",
+        "to": "langs",
+        "filter": [
+          "chi_sim.traineddata.gz",
+          "eng.traineddata.gz"
+        ]
+      }
+    ],
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer.js",
+      "index.html",
+      "engine/**/*",
+      "assets/tray.png",
+      "assets/tray@2x.png",
+      "assets/icon.png"
+    ],
+    "asarUnpack": [
+      "engine/**",
+      "node_modules/@napi-rs/**",
+      "node_modules/pdfjs-dist/**",
+      "node_modules/tesseract.js/**",
+      "node_modules/tesseract.js-core/**"
+    ],
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "assets/icon.icns",
+      "category": "public.app-category.productivity",
+      "identity": null,
+      "files": [
+        "main.js",
+        "preload.js",
+        "renderer.js",
+        "index.html",
+        "engine/**/*",
+        "assets/tray.png",
+        "assets/tray@2x.png",
+        "assets/icon.png",
+        "!node_modules/@napi-rs/canvas-win32-*/**",
+        "!node_modules/@napi-rs/canvas-linux-*/**"
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "assets/icon.ico",
+      "files": [
+        "main.js",
+        "preload.js",
+        "renderer.js",
+        "index.html",
+        "engine/**/*",
+        "assets/tray.png",
+        "assets/tray@2x.png",
+        "assets/icon.png",
+        "!node_modules/@napi-rs/canvas-darwin-*/**",
+        "!node_modules/@napi-rs/canvas-linux-*/**"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false,
+      "createDesktopShortcut": false,
+      "createStartMenuShortcut": true,
+      "shortcutName": "快文",
+      "include": "assets/installer.nsh"
+    },
+    "linux": {
+      "target": [
+        "deb"
+      ],
+      "icon": "assets/icon.png",
+      "category": "Utility",
+      "maintainer": "majiamia-dotcom <majiamia@gmail.com>",
+      "synopsis": "本地文档内容搜索器",
+      "files": [
+        "main.js",
+        "preload.js",
+        "renderer.js",
+        "index.html",
+        "engine/**/*",
+        "assets/tray.png",
+        "assets/tray@2x.png",
+        "assets/icon.png",
+        "!node_modules/@napi-rs/canvas-darwin-*/**",
+        "!node_modules/@napi-rs/canvas-win32-*/**"
+      ]
+    }
+  }
+}

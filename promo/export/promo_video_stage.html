@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>快文 QuickDocs Promo Stage</title>
+  <link rel="stylesheet" href="promo_video_stage.css">
+</head>
+<body>
+  <main class="stage" id="stage">
+    <div class="bg-base"></div>
+    <div class="bg-glow"></div>
+    <div class="grain"></div>
+    <div class="vignette"></div>
+    <section class="content" id="content"></section>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const requestedVariant = params.get('variant');
+    const variant = ['15', '24', '30'].includes(requestedVariant) ? requestedVariant : '30';
+    const stage = document.getElementById('stage');
+    stage.classList.toggle('style-light', variant === '24');
+    const content = document.getElementById('content');
+    const icon = '../../assets/icon.png';
+    const img = (name) => `screens/${name}.png`;
+
+    const timelines = {
+      '24': [
+        { s: 0, e: 2.2, type: 'refBrand', motion: 'calm', cap: '快文 QuickDocs' },
+        { s: 2.2, e: 4.0, type: 'refSearch', motion: 'lively', title: '不用记文件名', sub: '一个关键词，直接搜索正文' },
+        { s: 4.0, e: 5.8, type: 'demoStep', motion: 'slide', image: img('00_home'), title: '打开软件，进入本地资料库', sub: '主界面保留搜索框、索引状态和快捷入口', callout: '打开即用' },
+        { s: 5.8, e: 7.6, type: 'demoStep', motion: 'actions', image: img('01_actions'), title: '点击 LOGO，常用操作直接弹出', sub: '添加资料、开始索引、关闭入口一屏可见', callout: '点击 LOGO 展开操作', cursor: true },
+        { s: 7.6, e: 9.4, type: 'demoStep', motion: 'steady', image: img('02_choose_folder'), title: '选择文件夹，建立本地索引', sub: '系统会把资料整理成可检索的正文索引', callout: '添加资料库' },
+        { s: 9.4, e: 11.0, type: 'demoStep', motion: 'pulse', image: img('03_index_done'), title: '索引完成，千份文档稳定检索', sub: '资料数量、状态和耗时清晰反馈', callout: '索引完成' },
+        { s: 11.0, e: 13.2, type: 'demoStep', motion: 'focus', image: img('04_search_input'), title: '模拟动态输入关键词', sub: '输入“关键词A”，立即搜索所有文件正文', callout: '关键词A' },
+        { s: 13.2, e: 16.0, type: 'demoStep', motion: 'result', image: img('05_results_grouped'), title: '搜索结果按时间、正文、文件展开', sub: '不只看文件名，直接看到正文命中上下文', callout: '时间｜正文｜文件' },
+        { s: 16.0, e: 18.2, type: 'demoStep', motion: 'spotlight', image: img('06_result_highlight'), title: '点开结果，看完整上下文', sub: '关键词高亮，快速判断是否为目标材料', callout: '正文命中高亮', cursor: true },
+        { s: 18.2, e: 20.4, type: 'demoStep', motion: 'panel', image: img('07_filter_panel'), title: '范围、OCR、类型筛选', sub: '按资料库、文件类型、OCR 状态快速聚焦', callout: '范围 / 类型 / OCR' },
+        { s: 20.4, e: 21.8, type: 'security', motion: 'badges', cap: '纯本地｜离线运行｜无后台上传' },
+        { s: 21.8, e: 23.0, type: 'slogan', motion: 'slogan', cap: '搜文件，不如搜正文' },
+        { s: 23.0, e: 24.0, type: 'refBrand', motion: 'calm', cap: '快文 QuickDocs' }
+      ],
+      '30': [
+        { s: 0, e: 3, type: 'searchIntro', motion: 'lively', cap: '一个关键词，找到所有正文' },
+        { s: 3, e: 5, type: 'logo', motion: 'calm', cap: '快文 QuickDocs，本地文档内容搜索器' },
+        { s: 5, e: 8, type: 'window', motion: 'slide', image: img('00_home'), cap: '打开即用，即输即搜' },
+        { s: 8, e: 11, type: 'window', motion: 'steady', image: img('02_choose_folder'), cap: '选择文件夹，建立本地索引' },
+        { s: 11, e: 14, type: 'window', motion: 'pulse', image: img('03_index_done'), cap: '千份文档，稳定检索' },
+        { s: 14, e: 18, type: 'window', motion: 'focus', image: img('04_search_input'), cap: '输入关键词，搜索文件正文' },
+        { s: 18, e: 23, type: 'highlight', motion: 'spotlight', image: img('05_results_grouped'), cap: '时间｜正文｜文件，一屏定位来源' },
+        { s: 23, e: 25.5, type: 'window', motion: 'panel', image: img('07_filter_panel'), cap: '按范围筛选，按类型聚焦' },
+        { s: 25.5, e: 27, type: 'security', motion: 'badges', cap: '纯本地｜离线运行｜无后台上传' },
+        { s: 27, e: 28.6, type: 'slogan', motion: 'slogan', cap: '搜文件，不如搜正文' },
+        { s: 28.6, e: 30, type: 'logoEnd', motion: 'calm', cap: '快文 QuickDocs，搜文件，不如搜正文' }
+      ],
+      '15': [
+        { s: 0, e: 2, type: 'searchIntro', motion: 'lively', cap: '一个关键词，找到所有正文' },
+        { s: 2, e: 4, type: 'logo', motion: 'calm', cap: '快文 QuickDocs' },
+        { s: 4, e: 6, type: 'window', motion: 'pulse', image: img('03_index_done'), cap: '本地资料，一次索引' },
+        { s: 6, e: 9, type: 'window', motion: 'focus', image: img('04_search_input'), cap: '搜索正文，定位来源' },
+        { s: 9, e: 12, type: 'highlight', motion: 'spotlight', image: img('06_result_highlight'), cap: '关键词高亮，一屏定位来源' },
+        { s: 12, e: 13, type: 'window', motion: 'panel', image: img('07_filter_panel'), cap: '按类型聚焦，按范围筛选' },
+        { s: 13, e: 14.2, type: 'slogan', motion: 'slogan', cap: '搜文件，不如搜正文' },
+        { s: 14.2, e: 15, type: 'logoEnd', motion: 'calm', cap: '快文 QuickDocs' }
+      ]
+    };
+
+    let lastSegment = null;
+
+    function ease(x) {
+      return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+    }
+
+    function localProgress(t, seg) {
+      return Math.max(0, Math.min(1, (t - seg.s) / (seg.e - seg.s)));
+    }
+
+    const motionProfiles = {
+      lively: { bg: 1, float: .8 },
+      calm: { bg: .18, float: .12 },
+      slide: { bg: .38, float: .3 },
+      steady: { bg: .08, float: 0 },
+      pulse: { bg: .2, float: .08 },
+      focus: { bg: .3, float: .16 },
+      spotlight: { bg: .34, float: .12 },
+      panel: { bg: .2, float: .08 },
+      badges: { bg: .5, float: .22 },
+      slogan: { bg: .72, float: .18 },
+      actions: { bg: .24, float: .1 },
+      result: { bg: .2, float: .08 }
+    };
+
+    function resetMotionVars() {
+      const vars = ['--scene-x','--scene-y','--window-x','--window-y','--window-scale','--pill-x','--pill-y','--pill-scale','--zoom-x','--zoom-y','--zoom-scale','--logo-y','--logo-scale','--badge-y','--badge-scale','--slogan-y','--slogan-scale','--slogan-pill-y','--slogan-pill-scale','--demo-x','--demo-y','--demo-scale','--cursor-x','--cursor-y','--callout-y'];
+      for (const name of vars) document.documentElement.style.removeProperty(name);
+    }
+
+    function mix(a, b, p) {
+      return a + (b - a) * p;
+    }
+
+    function smoothstep(x) {
+      return x * x * (3 - 2 * x);
+    }
+
+    const colorRoutes = [
+      { cyan: [10, 42], cyanGlow: [16, 50], mag: [46, 78], magGlow: [46, 86], violet: [50, 20], violetGlow: [57, 28] },
+      { cyan: [18, 64], cyanGlow: [20, 62], mag: [62, 73], magGlow: [60, 82], violet: [42, 24], violetGlow: [48, 30] },
+      { cyan: [32, 32], cyanGlow: [29, 38], mag: [38, 82], magGlow: [36, 88], violet: [68, 34], violetGlow: [66, 30] },
+      { cyan: [8, 54], cyanGlow: [12, 58], mag: [54, 69], magGlow: [55, 78], violet: [56, 16], violetGlow: [58, 24] }
+    ];
+
+    function setPointVars(prefix, point) {
+      document.documentElement.style.setProperty(`--${prefix}-base-x`, `${point[0]}%`);
+      document.documentElement.style.setProperty(`--${prefix}-base-y`, `${point[1]}%`);
+    }
+
+    function setGlowVars(prefix, point) {
+      document.documentElement.style.setProperty(`--${prefix}-glow-x`, `${point[0]}%`);
+      document.documentElement.style.setProperty(`--${prefix}-glow-y`, `${point[1]}%`);
+    }
+
+    function setBackground(t, seg) {
+      const profile = motionProfiles[seg.motion] || motionProfiles.steady;
+      const m = profile.bg;
+      const routeDuration = 4.6;
+      const routeIndex = Math.floor(t / routeDuration) % colorRoutes.length;
+      const nextRouteIndex = (routeIndex + 1) % colorRoutes.length;
+      const routeMix = smoothstep((t % routeDuration) / routeDuration);
+      const current = colorRoutes[routeIndex];
+      const next = colorRoutes[nextRouteIndex];
+      const point = (key) => [mix(current[key][0], next[key][0], routeMix), mix(current[key][1], next[key][1], routeMix)];
+      setPointVars('cyan', point('cyan'));
+      setPointVars('mag', point('mag'));
+      setPointVars('violet', point('violet'));
+      setGlowVars('cyan', point('cyanGlow'));
+      setGlowVars('mag', point('magGlow'));
+      setGlowVars('violet', point('violetGlow'));
+
+      const colorPulse = (Math.sin(t * .82) + 1) / 2;
+      document.documentElement.style.setProperty('--cyan-a', `${.78 + colorPulse * .18}`);
+      document.documentElement.style.setProperty('--cyan-soft-a', `${.36 + colorPulse * .16}`);
+      document.documentElement.style.setProperty('--cyan-glow-a', `${.16 + colorPulse * .13}`);
+      document.documentElement.style.setProperty('--mag-a', `${.72 + (1 - colorPulse) * .18}`);
+      document.documentElement.style.setProperty('--mag-soft-a', `${.32 + (1 - colorPulse) * .16}`);
+      document.documentElement.style.setProperty('--mag-glow-a', `${.18 + (1 - colorPulse) * .13}`);
+      document.documentElement.style.setProperty('--violet-a', `${.78 + Math.sin(t * .55 + 1.4) * .08}`);
+      document.documentElement.style.setProperty('--violet-soft-a', `${.47 + Math.cos(t * .48) * .08}`);
+      document.documentElement.style.setProperty('--violet-glow-a', `${.18 + Math.sin(t * .44) * .06}`);
+
+      const cyanX = Math.sin(t * .42) * 46 * m;
+      const cyanY = Math.cos(t * .37) * 26 * m;
+      const magX = Math.cos(t * .31) * 38 * m;
+      const magY = Math.sin(t * .29) * 30 * m;
+      const violetX = Math.sin(t * .24 + 1.4) * 42 * m;
+      const violetY = Math.cos(t * .27) * 24 * m;
+      document.documentElement.style.setProperty('--cyan-x', `${cyanX}px`);
+      document.documentElement.style.setProperty('--cyan-y', `${cyanY}px`);
+      document.documentElement.style.setProperty('--mag-x', `${magX}px`);
+      document.documentElement.style.setProperty('--mag-y', `${magY}px`);
+      document.documentElement.style.setProperty('--violet-x', `${violetX}px`);
+      document.documentElement.style.setProperty('--violet-y', `${violetY}px`);
+      document.documentElement.style.setProperty('--bg-x', `${Math.sin(t * .18) * 24 * m}px`);
+      document.documentElement.style.setProperty('--bg-y', `${Math.cos(t * .2) * 18 * m}px`);
+      document.documentElement.style.setProperty('--bg-scale', `${1.035 + Math.sin(t * .16) * .012 * m}`);
+      document.documentElement.style.setProperty('--hue', `${Math.sin(t * .2) * 7 * m}deg`);
+      document.documentElement.style.setProperty('--sat', `${1.1 + Math.sin(t * .23) * .08 * m}`);
+      document.documentElement.style.setProperty('--bright', `${.98 + Math.cos(t * .19) * .035 * m}`);
+      document.documentElement.style.setProperty('--float', `${Math.sin(t * 1.05) * 8 * profile.float}px`);
+    }
+
+    function setSegmentMotion(t, seg, p) {
+      resetMotionVars();
+      const e = ease(Math.min(1, p));
+      const breathe = Math.sin(t * 1.2);
+      if (seg.motion === 'lively') {
+        document.documentElement.style.setProperty('--pill-x', `${(1 - e) * 44 + Math.sin(t * 1.4) * 4}px`);
+        document.documentElement.style.setProperty('--pill-scale', `${1 + Math.sin(t * .8) * .006}`);
+        document.documentElement.style.setProperty('--scene-y', `${Math.sin(t * .9) * 2}px`);
+      } else if (seg.motion === 'calm') {
+        document.documentElement.style.setProperty('--logo-scale', `${1 + breathe * .004}`);
+        document.documentElement.style.setProperty('--logo-y', `${breathe * 2}px`);
+      } else if (seg.motion === 'slide') {
+        document.documentElement.style.setProperty('--window-x', `${(1 - e) * -42}px`);
+        document.documentElement.style.setProperty('--window-scale', `${.986 + e * .014}`);
+        document.documentElement.style.setProperty('--demo-x', `${(1 - e) * -42}px`);
+        document.documentElement.style.setProperty('--demo-scale', `${.986 + e * .014}`);
+      } else if (seg.motion === 'steady') {
+        document.documentElement.style.setProperty('--window-scale', '1');
+        document.documentElement.style.setProperty('--demo-scale', '1');
+      } else if (seg.motion === 'pulse') {
+        document.documentElement.style.setProperty('--window-scale', `${1 + Math.sin(t * 1.1) * .004}`);
+        document.documentElement.style.setProperty('--demo-scale', `${1 + Math.sin(t * 1.1) * .004}`);
+      } else if (seg.motion === 'focus') {
+        document.documentElement.style.setProperty('--window-scale', `${1 + e * .018}`);
+        document.documentElement.style.setProperty('--window-y', `${(1 - e) * 16}px`);
+        document.documentElement.style.setProperty('--demo-scale', `${1 + e * .018}`);
+        document.documentElement.style.setProperty('--demo-y', `${(1 - e) * 16}px`);
+      } else if (seg.motion === 'spotlight') {
+        document.documentElement.style.setProperty('--zoom-x', `${(1 - e) * 72}px`);
+        document.documentElement.style.setProperty('--zoom-scale', `${.97 + e * .03}`);
+        document.documentElement.style.setProperty('--window-scale', `${1 + Math.sin(t * .7) * .004}`);
+        document.documentElement.style.setProperty('--demo-scale', `${1 + Math.sin(t * .7) * .004}`);
+        document.documentElement.style.setProperty('--cursor-x', `${(1 - e) * 58}px`);
+        document.documentElement.style.setProperty('--cursor-y', `${(1 - e) * -32}px`);
+      } else if (seg.motion === 'panel') {
+        document.documentElement.style.setProperty('--window-x', `${(1 - e) * 34}px`);
+        document.documentElement.style.setProperty('--window-scale', `${.99 + e * .01}`);
+        document.documentElement.style.setProperty('--demo-x', `${(1 - e) * 34}px`);
+        document.documentElement.style.setProperty('--demo-scale', `${.99 + e * .01}`);
+      } else if (seg.motion === 'actions') {
+        document.documentElement.style.setProperty('--demo-scale', `${.99 + e * .01}`);
+        document.documentElement.style.setProperty('--cursor-x', `${(1 - e) * -38}px`);
+        document.documentElement.style.setProperty('--cursor-y', `${(1 - e) * 24}px`);
+      } else if (seg.motion === 'result') {
+        document.documentElement.style.setProperty('--demo-y', `${Math.sin(t * .9) * 3}px`);
+        document.documentElement.style.setProperty('--demo-scale', `${1 + Math.sin(t * .7) * .003}`);
+      } else if (seg.motion === 'badges') {
+        document.documentElement.style.setProperty('--badge-y', `${Math.sin(t * 2.4) * 8}px`);
+        document.documentElement.style.setProperty('--badge-scale', `${1 + Math.sin(t * 1.5) * .006}`);
+      } else if (seg.motion === 'slogan') {
+        document.documentElement.style.setProperty('--slogan-y', `${(1 - e) * 24 + Math.sin(t * 1.1) * 2}px`);
+        document.documentElement.style.setProperty('--slogan-scale', `${.986 + e * .014}`);
+        document.documentElement.style.setProperty('--slogan-pill-y', `${(1 - e) * 18 - Math.sin(t * .8) * 2}px`);
+        document.documentElement.style.setProperty('--slogan-pill-scale', `${.99 + e * .01}`);
+      }
+      if (seg.type === 'demoStep') {
+        document.documentElement.style.setProperty('--callout-y', `${(1 - e) * 18}px`);
+      }
+    }
+
+    function caption(text, center = false) {
+      return `<div class="caption${center ? ' center' : ''}">${text}</div>`;
+    }
+
+    function logoBlock(end = false) {
+      return `<div class="logo-lockup" style="${end ? 'top:282px' : ''}">
+        <div class="logo-circle"><img src="${icon}" alt=""></div>
+        <div class="brand">快文 QuickDocs<small>${end ? '搜文件，不如搜正文' : '本地文档内容搜索器'}</small></div>
+      </div>`;
+    }
+
+    function refLogoBlock() {
+      return `<div class="ref-brand-lockup">
+        <div class="logo-circle"><img src="${icon}" alt=""></div>
+        <div class="ref-brand-name">快文 <span>QuickDocs</span></div>
+        <div class="ref-brand-sub">一句话：搜完整个文档库</div>
+        <div class="ref-pills"><span>本地安全</span><span>快速检索</span><span>无后台上传</span></div>
+      </div>`;
+    }
+
+    function fileCards() {
+      return `<div class="file-card a"><span class="tag">OFD</span><div class="line med"></div><div class="line"></div><div class="line short"></div></div>
+        <div class="file-card b"><span class="tag">PDF</span><div class="line"></div><div class="line med"></div><div class="line short"></div></div>
+        <div class="file-card c"><span class="tag">Word / WPS</span><div class="line med"></div><div class="line short"></div><div class="line"></div></div>`;
+    }
+
+    function renderSegment(seg) {
+      if (seg === lastSegment) return;
+      lastSegment = seg;
+      if (seg.type === 'searchIntro') {
+        content.innerHTML = `<div class="scene search-intro">
+          <div class="hero-title">一个关键词，找到所有正文</div>
+          <div class="hero-sub">面向政企办公场景的本地文档内容搜索器。</div>
+          <div class="search-pill"><div class="mag"></div><div class="search-text">关键词A</div></div>
+          ${fileCards()}
+          ${caption(seg.cap)}
+        </div>`;
+      } else if (seg.type === 'refBrand') {
+        content.innerHTML = `<div class="scene ref-brand">${refLogoBlock()}</div>`;
+      } else if (seg.type === 'refSearch') {
+        content.innerHTML = `<div class="scene ref-search">
+          <div class="ref-title">${seg.title}</div>
+          <div class="ref-sub">${seg.sub}</div>
+          <div class="ref-search-pill"><div class="mag"></div><div class="search-text">关键词A</div></div>
+          <div class="cursor-arrow ref-cursor"></div>
+        </div>`;
+      } else if (seg.type === 'logo' || seg.type === 'logoEnd') {
+        content.innerHTML = `<div class="scene">${logoBlock(seg.type === 'logoEnd')}${caption(seg.cap, true)}</div>`;
+      } else if (seg.type === 'window') {
+        content.innerHTML = `<div class="scene">
+          <div class="ui-window"><img src="${seg.image}" alt=""></div>
+          ${caption(seg.cap)}
+        </div>`;
+      } else if (seg.type === 'demoStep') {
+        content.innerHTML = `<div class="scene demo-scene">
+          <div class="demo-title">${seg.title}</div>
+          <div class="demo-sub">${seg.sub}</div>
+          <div class="demo-window"><img src="${seg.image}" alt=""></div>
+          <div class="demo-callout">${seg.callout}</div>
+          ${seg.cursor ? '<div class="cursor-arrow demo-cursor"></div>' : ''}
+        </div>`;
+      } else if (seg.type === 'highlight') {
+        content.innerHTML = `<div class="scene">
+          <div class="ui-window left"><img src="${seg.image}" alt=""></div>
+          <div class="zoom-card"><div class="line">命中段落：围绕 <b>关键词A</b> 开展政策梳理，定位来源文件。</div></div>
+          ${caption(seg.cap)}
+        </div>`;
+      } else if (seg.type === 'security') {
+        content.innerHTML = `<div class="scene">
+          <div class="hero-title center">纯本地｜离线运行｜无后台上传</div>
+          <div class="security"><span>纯本地</span><span>离线运行</span><span>无后台上传</span></div>
+          ${caption(seg.cap, true)}
+        </div>`;
+      } else if (seg.type === 'slogan') {
+        content.innerHTML = `<div class="scene slogan-scene">
+          <div class="slogan-title">搜文件，不如搜正文</div>
+          <div class="slogan-pill">快文 QuickDocs</div>
+          ${caption(seg.cap, true)}
+        </div>`;
+      }
+    }
+
+    window.__setPromoTime = (t) => {
+      const timeline = timelines[variant];
+      const seg = timeline.find((item) => t >= item.s && t < item.e) || timeline[timeline.length - 1];
+      setBackground(t, seg);
+      renderSegment(seg);
+      const p = localProgress(t, seg);
+      setSegmentMotion(t, seg, p);
+      const softFade = seg.motion === 'lively' || seg.motion === 'calm' || seg.motion === 'badges' || seg.motion === 'slogan';
+      const fadeIn = softFade ? Math.min(1, p / .14) : 1;
+      const fadeOut = softFade ? Math.min(1, (1 - p) / .14) : 1;
+      const alpha = Math.min(fadeIn, fadeOut);
+      const entrance = ease(Math.min(1, p));
+      const scaleLiftMotions = ['lively', 'slide', 'focus', 'spotlight', 'panel', 'badges', 'slogan', 'actions', 'result'];
+      const useLift = scaleLiftMotions.includes(seg.motion);
+      document.documentElement.style.setProperty('--scene-alpha', `${Math.max(.001, ease(alpha))}`);
+      document.documentElement.style.setProperty('--scene-scale', `${useLift ? 1 + (1 - entrance) * .018 : 1}`);
+      document.documentElement.style.setProperty('--lift', `${useLift ? (1 - entrance) * 12 : 0}px`);
+    };
+
+    window.__setPromoTime(0);
+  </script>
+</body>
+</html>

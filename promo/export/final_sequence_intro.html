@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QuickDocs Final Intro</title>
+  <style>
+    :root {
+      --t: 0;
+      --cover-opacity: 1;
+      --search-opacity: 0;
+      --launch-opacity: 0;
+      --icon-scale: 1;
+      --icon-tilt: 0deg;
+      --cursor-x: 1540px;
+      --cursor-y: 910px;
+      --cursor-scale: 1;
+      --click-a: 0;
+      --click-b: 0;
+      --window-opacity: 0;
+      --window-scale: .28;
+      --window-y: 116px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 1920px;
+      height: 1080px;
+      margin: 0;
+      overflow: hidden;
+      background: #fff;
+      font-family: "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+    }
+
+    body {
+      position: relative;
+    }
+
+    .stage,
+    .layer {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+    }
+
+    .cover-layer {
+      opacity: var(--cover-opacity);
+      z-index: 1;
+      background: #07122f;
+    }
+
+    .cover-layer img,
+    .search-layer img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .search-layer {
+      z-index: 2;
+      opacity: var(--search-opacity);
+      transform: scale(calc(1.035 - min(var(--t), 3) * .008));
+      transform-origin: 52% 48%;
+      background: #07122f;
+    }
+
+    .search-layer::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 22% 58%, rgba(22, 200, 255, .12), transparent 34%),
+        radial-gradient(circle at 53% 88%, rgba(255, 60, 157, .16), transparent 32%),
+        linear-gradient(90deg, rgba(7, 18, 47, .06), rgba(7, 18, 47, 0) 36%, rgba(7, 18, 47, .16));
+      pointer-events: none;
+    }
+
+    .launch-layer {
+      z-index: 3;
+      opacity: var(--launch-opacity);
+      background:
+        radial-gradient(circle at 50% 46%, rgba(255, 255, 255, 1) 0 21%, rgba(249, 250, 255, .98) 38%, rgba(242, 246, 255, .96) 55%, rgba(255, 255, 255, 1) 100%);
+      overflow: hidden;
+    }
+
+    .launch-layer::before {
+      content: "";
+      position: absolute;
+      inset: -120px;
+      background:
+        radial-gradient(circle at 50% 47%, rgba(37, 18, 122, .09), transparent 22%),
+        radial-gradient(circle at 41% 56%, rgba(22, 200, 255, .11), transparent 24%),
+        radial-gradient(circle at 61% 58%, rgba(255, 60, 157, .08), transparent 24%);
+      filter: blur(20px);
+    }
+
+    .launch-floor {
+      position: absolute;
+      left: 50%;
+      top: 608px;
+      width: 520px;
+      height: 82px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center, rgba(19, 32, 90, .18), rgba(19, 32, 90, 0) 68%);
+      filter: blur(12px);
+      opacity: calc(.78 - var(--window-opacity) * .6);
+      transform: translateX(-50%) scale(var(--icon-scale));
+    }
+
+    .app-icon-wrap {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 250px;
+      height: 250px;
+      transform:
+        translate(-50%, -50%)
+        translateY(calc(var(--window-opacity) * -190px))
+        scale(calc(var(--icon-scale) * (1 - var(--window-opacity) * .45)))
+        rotateX(11deg)
+        rotateY(var(--icon-tilt));
+      transform-style: preserve-3d;
+      transform-origin: center;
+      filter:
+        drop-shadow(0 42px 56px rgba(20, 24, 55, .23))
+        drop-shadow(0 12px 18px rgba(106, 34, 255, .16));
+      opacity: calc(1 - var(--window-opacity) * .2);
+    }
+
+    .app-icon-depth {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      transform: translateZ(-22px) translate(14px, 18px);
+      background: linear-gradient(135deg, rgba(12, 18, 43, .4), rgba(50, 34, 115, .18));
+      filter: blur(.2px);
+      opacity: .65;
+    }
+
+    .app-icon {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      transform: translateZ(22px);
+      object-fit: cover;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .18),
+        0 0 0 1px rgba(6, 12, 28, .08);
+    }
+
+    .click-ring {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 250px;
+      height: 250px;
+      border: 5px solid rgba(37, 18, 122, .34);
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(calc(.88 + var(--click-a) * .42));
+      opacity: calc(var(--click-a) * .72);
+      filter: blur(.2px);
+    }
+
+    .click-ring.second {
+      border-color: rgba(22, 200, 255, .32);
+      transform: translate(-50%, -50%) scale(calc(.88 + var(--click-b) * .44));
+      opacity: calc(var(--click-b) * .68);
+    }
+
+    .app-window-shell {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 1480px;
+      height: 832px;
+      border-radius: 28px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow:
+        0 42px 110px rgba(17, 27, 72, .22),
+        0 14px 38px rgba(106, 34, 255, .13),
+        0 0 0 1px rgba(20, 33, 78, .08);
+      opacity: var(--window-opacity);
+      transform:
+        translate(-50%, -50%)
+        translateY(var(--window-y))
+        scale(var(--window-scale));
+      transform-origin: 50% 49%;
+    }
+
+    .app-window-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, .24), transparent 15%),
+        radial-gradient(circle at 52% 8%, rgba(255, 255, 255, .42), transparent 18%);
+      pointer-events: none;
+    }
+
+    .app-window-shell img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .cursor {
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 10;
+      width: 112px;
+      height: 142px;
+      transform:
+        translate(var(--cursor-x), var(--cursor-y))
+        scale(var(--cursor-scale))
+        rotate(-10deg);
+      transform-origin: 18px 18px;
+      filter: drop-shadow(0 16px 18px rgba(14, 18, 44, .23));
+    }
+
+    .cursor::before,
+    .cursor::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      clip-path: polygon(8% 2%, 8% 78%, 33% 58%, 49% 98%, 66% 91%, 50% 52%, 82% 53%);
+    }
+
+    .cursor::before {
+      background: rgba(7, 18, 47, .82);
+      transform: translate(3px, 3px) scale(1.04);
+    }
+
+    .cursor::after {
+      background: linear-gradient(135deg, #ffffff, #eef3ff);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .7);
+    }
+
+    .open-label {
+      position: absolute;
+      left: 50%;
+      top: 686px;
+      transform: translateX(-50%) translateY(calc(var(--window-opacity) * 34px));
+      color: rgba(10, 16, 64, .7);
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: 0;
+      opacity: calc(.75 - var(--window-opacity) * .75);
+    }
+  </style>
+</head>
+<body>
+  <main class="stage">
+    <section class="layer cover-layer">
+      <img src="QuickDocs_cover_moments_16x9.png" alt="">
+    </section>
+
+    <section class="layer search-layer">
+      <img src="QuickDocs_reference_search_intro.jpg" alt="">
+    </section>
+
+    <section class="layer launch-layer">
+      <div class="launch-floor"></div>
+      <div class="click-ring"></div>
+      <div class="click-ring second"></div>
+      <div class="app-icon-wrap">
+        <div class="app-icon-depth"></div>
+        <img class="app-icon" src="../../assets/icon.png" alt="">
+      </div>
+      <div class="app-window-shell">
+        <img src="screens/00_home.png" alt="">
+      </div>
+      <div class="open-label">双击打开快文 QuickDocs</div>
+      <div class="cursor"></div>
+    </section>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+
+    const clamp = (value, min = 0, max = 1) => Math.max(min, Math.min(max, value));
+    const smooth = (value) => {
+      const x = clamp(value);
+      return x * x * (3 - 2 * x);
+    };
+    const mix = (from, to, amount) => from + (to - from) * amount;
+    const pulse = (t, center, width) => {
+      const x = Math.abs(t - center) / width;
+      return clamp(1 - x);
+    };
+    const easePath = (t, start, end) => smooth((t - start) / (end - start));
+
+    function setVar(name, value) {
+      root.style.setProperty(name, value);
+    }
+
+    window.__setFinalIntroTime = (t) => {
+      const coverOut = smooth((t - .62) / .9);
+      const searchIn = smooth((t - .76) / .72);
+      const searchOut = smooth((t - 3.02) / .62);
+      const launchIn = smooth((t - 3.26) / .58);
+
+      setVar('--t', t.toFixed(4));
+      setVar('--cover-opacity', (1 - coverOut).toFixed(4));
+      setVar('--search-opacity', (searchIn * (1 - searchOut)).toFixed(4));
+      setVar('--launch-opacity', launchIn.toFixed(4));
+
+      const pathA = easePath(t, 3.78, 4.72);
+      const pathB = easePath(t, 5.18, 5.92);
+      const firstX = mix(1502, 982, pathA);
+      const firstY = mix(868, 520, pathA);
+      const secondX = mix(firstX, 1058, pathB);
+      const secondY = mix(firstY, 585, pathB);
+      const clickA = pulse(t, 4.86, .34);
+      const clickB = pulse(t, 5.32, .34);
+      const clickPress = Math.max(pulse(t, 4.86, .12), pulse(t, 5.32, .12));
+      const cursorExit = smooth((t - 6.35) / .75);
+
+      setVar('--cursor-x', `${mix(secondX, 1378, cursorExit).toFixed(2)}px`);
+      setVar('--cursor-y', `${mix(secondY, 780, cursorExit).toFixed(2)}px`);
+      setVar('--cursor-scale', (1.02 - clickPress * .16 + cursorExit * .02).toFixed(4));
+      setVar('--click-a', clickA.toFixed(4));
+      setVar('--click-b', clickB.toFixed(4));
+
+      const iconFloat = Math.sin(t * 3.1) * .015;
+      const iconReact = Math.max(clickA, clickB) * .075;
+      const windowOpen = smooth((t - 5.62) / .92);
+      const windowSettle = smooth((t - 6.72) / .78);
+
+      setVar('--icon-scale', (1 + iconFloat + iconReact).toFixed(4));
+      setVar('--icon-tilt', `${(Math.sin(t * 2.2) * 5 + iconReact * 8).toFixed(3)}deg`);
+      setVar('--window-opacity', windowOpen.toFixed(4));
+      setVar('--window-scale', (mix(.28, .92, windowOpen) + windowSettle * .035).toFixed(4));
+      setVar('--window-y', `${mix(116, -8, windowOpen).toFixed(2)}px`);
+    };
+
+    window.__setFinalIntroTime(0);
+  </script>
+</body>
+</html>

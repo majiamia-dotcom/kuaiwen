@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>快文 QuickDocs 蓝紫动态渐变素材</title>
+  <link rel="stylesheet" href="blue_concept.css">
+</head>
+<body>
+  <main class="scene" id="scene"></main>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const scene = params.get('scene') || 'search';
+    const format = params.get('format') || 'landscape';
+    const root = document.getElementById('scene');
+    root.className = `scene ${scene} ${format}`;
+    const glows = '<div class="glow one"></div><div class="glow two"></div><div class="glow three"></div>';
+    const icon = '<div class="logo-icon"><img src="../../assets/icon.png" alt=""></div>';
+
+    const scenes = {
+      search: `${glows}<div class="search-box"><div class="magnifier"></div><div class="keyword-input">关键词A</div></div>`,
+      keyword: `${glows}<div class="headline">一个关键词，找到所有正文</div><div class="mini-search">关键词A</div>`,
+      files: `${glows}<div class="cards">
+        <div class="file-card a"><span class="tag">OFD</span><div class="line med"></div><div class="line"></div><div class="line short"></div></div>
+        <div class="file-card b"><span class="tag">PDF</span><div class="line"></div><div class="line med"></div><div class="line short"></div></div>
+        <div class="file-card c"><span class="tag">Word</span><div class="line short"></div><div class="line"></div><div class="line med"></div></div>
+        <div class="file-card d"><span class="tag">WPS</span><div class="line med"></div><div class="line short"></div><div class="line"></div></div>
+      </div><div class="headline files-title">OFD / PDF / Word / WPS</div><div class="subline files-subline">多类型资料，一次索引</div>`,
+      logo: `${glows}<div class="logo-lockup">${icon}<div class="brand-name">快文 <span>QuickDocs</span></div><div class="brand-sub">本地文档内容搜索器</div></div>`,
+      slogan: `${glows}<div class="slogan">搜文件，不如搜正文</div><div class="mini-search">快文 QuickDocs</div>`,
+      cover: `${glows}<div class="cover-lockup">${icon}<div class="cover-title">快文 <span>QuickDocs</span></div><div class="cover-slogan">搜文件，不如搜正文</div><div class="cover-sub">一个关键词，找到所有正文</div><div class="cover-pill">本地文档内容搜索器</div></div>`
+    };
+
+    root.innerHTML = scenes[scene] || scenes.search;
+  </script>
+</body>
+</html>
