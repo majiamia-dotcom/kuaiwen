@@ -89,3 +89,37 @@ npm test
 - macOS 尚未公证，Windows 尚未代码签名。
 - 图片只有在设置中开启 OCR 后才进入索引，避免默认扫描照片库导致长时间等待。
 - OCR 会逐页补识别混合型 PDF 中的扫描页，单份文件最多处理 30 个扫描页；结果仍需用原文件复核。
+
+---
+
+# QuickDocs (快文) — English
+
+**QuickDocs is a fully offline, local-first desktop search tool for the *content* of your documents** — it searches what is written inside files, not just file names. Built for secretaries, government/enterprise offices, engineers and anyone who thinks *"I know I wrote this somewhere… but which file?"*
+
+> ⚠️ The user interface is currently Chinese-only. An English UI is planned for a future release. The search engine and OCR already handle English documents.
+
+## Why QuickDocs
+
+- **100% offline & private**: indexing, search and OCR all run locally. No upload, no account, no background full-disk scanning.
+- **Real content search**: recursive multi-folder indexing with incremental updates; pure-JavaScript inverted index persisted on disk.
+- **Wide format support**: TXT, CSV, Markdown, DOCX, PDF, OFD, DOC, WPS, PPTX/PPTM/PPSX/POTX, XLSX/XLSM text extraction.
+- **Offline OCR** (Tesseract.js, bundled Chinese + English language data): JPG/PNG/BMP/WebP/TIFF and scanned PDF pages.
+- **Multi-keyword paragraph-level AND search** with hit highlighting.
+- **Document classification**: formal notices, regulations, standards, plans, academic journals, general files; sort by file modification time or in-document publication date (manually correctable).
+- **Cross-platform**: macOS (Apple Silicon), Windows x64, Linux/Kylin packages.
+
+## Download
+
+Prebuilt installers are on the [Releases](../../releases) page. macOS build is not yet notarized and Windows build is not yet code-signed — you may need to allow the app in your OS security settings on first launch.
+
+## Build from source
+
+```bash
+npm ci
+npm start        # run the app
+npm run dist     # build installers (mac / win / linux)
+```
+
+## License
+
+MIT © 2026 majiamia-dotcom
