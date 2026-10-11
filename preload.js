@@ -12,5 +12,7 @@ contextBridge.exposeInMainWorld('api', {
   openFile: (p) => ipcRenderer.invoke('open-file', p),
   getHotkey: () => ipcRenderer.invoke('get-hotkey'),
   setHotkey: (accel) => ipcRenderer.invoke('set-hotkey', accel),
+  getUILang: () => ipcRenderer.invoke('get-ui-lang'),
+  setUILang: (l) => ipcRenderer.invoke('set-ui-lang', l),
   onProgress: (cb) => ipcRenderer.on('index-progress', (_e, p) => cb(p))
 });

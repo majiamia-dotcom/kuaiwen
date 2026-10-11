@@ -313,7 +313,7 @@
 <body>
   <div class="app" id="app">
     <div class="rail">
-      <button class="logo" id="logoBtn" title="点我展开/收起操作" aria-label="展开/收起操作">
+      <button class="logo" id="logoBtn" data-i18n-title="title.logo" data-i18n-aria="aria.logo" title="点我展开/收起操作" aria-label="展开/收起操作">
         <span class="clip">
           <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path fill="#fbbb01" d="M919.76,194.14l.82,9.33-.08,23.99c-2.18,22.53-9.83,43.82-22.87,62.08l-13.97,17.27-289.43,287.87-35.18-35.2,293.73-292.15c11.49-11.42,16.42-28.91,18.57-43.98,3.22-22.58-3.65-44.64-17.89-62.15l-22.13-22.43c-3.67-3.73-8.44-6.19-12.9-8.68-30.84-17.25-71.35-12.4-97.24,12.14l-8.59,8.16-7.44,7.48-6.09,6.12-7,7.05-25.74,25.57-9.39,9.37-7.45,7.38-8.45,8.42-6.1,6-10.3,10.25-9.36,9.24-6.58,6.54-7.97,7.92-7.04,6.98-7.55,7.43-7.22,7.24-8.1,8.19-10.82,10.78-9.69,9.76-23,22.77-15.08,15.03-81.56,81.05-34.87-34.9L689.9,103.58c17.56-14.47,36.81-25.48,59.07-29.83l10.78-2.11,18.99-.78,16.2.72c18.28,2.11,35.04,8.03,50.89,17.26,16.79,9.78,30.04,22.89,42.93,37.51,16.77,19.04,27.09,42.48,31.01,67.79Z"/>
   <path fill="#2b5ef5" d="M853.45,161.18c14.24,17.52,21.12,39.57,17.89,62.15-2.15,15.07-7.09,32.56-18.57,43.98l-293.73,292.15-60.86-60.93,181.53-180.49c5.62-5.58,7.96-12.16,7.56-20.2-.64-12.92-10.39-21.69-22.99-22.81-7.3-.64-14.78,3.36-19.65,8.24l-9.4,9.44-7.94,7.94-7.01,6.95-9.1,8.91-147.92,147.07-32.61-32.64,81.56-81.05,15.08-15.03,23-22.77,9.69-9.76,10.82-10.78,8.1-8.19,7.22-7.24,7.55-7.43,7.04-6.98,7.97-7.92,6.58-6.54,9.36-9.24,10.3-10.25,6.1-6,8.45-8.42,7.45-7.38,9.39-9.37,25.74-25.57,7-7.05,6.09-6.12,7.44-7.48,8.59-8.16c25.88-24.55,66.4-29.39,97.24-12.14,4.46,2.5,9.23,4.95,12.9,8.68l22.13,22.43Z"/>
@@ -329,13 +329,13 @@
         </span>
       </button>
       <div class="actions" id="actions">
-        <button class="cbtn add" id="addBtn" title="添加文件夹" aria-label="添加文件夹">
+        <button class="cbtn add" id="addBtn" data-i18n-title="title.add" data-i18n-aria="title.add" title="添加文件夹" aria-label="添加文件夹">
           <svg viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"><line x1="24" y1="14" x2="24" y2="34"/><line x1="14" y1="24" x2="34" y2="24"/></svg>
         </button>
-        <button class="cbtn idx" id="indexBtn" disabled title="建立 / 更新索引" aria-label="建立索引">
+        <button class="cbtn idx" id="indexBtn" disabled data-i18n-title="title.index" data-i18n-aria="aria.index" title="建立 / 更新索引" aria-label="建立索引">
           <svg viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"><path d="M19 14.5 L35 24 L19 33.5 Z"/></svg>
         </button>
-        <button class="cbtn clr" id="clearBtn" title="清空索引" aria-label="清空索引">
+        <button class="cbtn clr" id="clearBtn" data-i18n-title="title.clear" data-i18n-aria="title.clear" title="清空索引" aria-label="清空索引">
           <svg viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"><line x1="16" y1="16" x2="32" y2="32"/><line x1="32" y1="16" x2="16" y2="32"/></svg>
         </button>
       </div>
@@ -345,53 +345,62 @@
       <div class="searchrow">
         <div class="searchwrap">
           <div class="searchbar">
-            <input id="searchInput" type="text" placeholder="输入关键词即时搜索，多个词空格分隔更聚焦" disabled autocomplete="off" />
-            <button class="rbtn setbtn" id="settingsBtn" title="设置 / 选择搜索文件夹" aria-label="设置">
+            <input id="searchInput" type="text" data-i18n-ph="ph.search" placeholder="输入关键词即时搜索，多个词空格分隔更聚焦" disabled autocomplete="off" />
+            <button class="rbtn setbtn" id="settingsBtn" data-i18n-title="title.settings" data-i18n-aria="aria.settings" title="设置 / 选择搜索文件夹" aria-label="设置">
               <svg viewBox="0 0 48 48"><g fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round"><line x1="8" y1="15" x2="40" y2="15"/><line x1="8" y1="24" x2="40" y2="24"/><line x1="8" y1="33" x2="40" y2="33"/></g><circle cx="32" cy="15" r="4" fill="#ff5fa0"/><circle cx="18" cy="24" r="4" fill="#ff5fa0"/><circle cx="29" cy="33" r="4" fill="#ff5fa0"/></svg>
             </button>
-            <button class="rbtn foldbtn" id="foldBtn" title="全部显示（平铺）" aria-label="全部显示">
+            <button class="rbtn foldbtn" id="foldBtn" data-i18n-aria="aria.fold" title="全部显示（平铺）" aria-label="全部显示">
               <svg viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"><line x1="8" y1="15" x2="40" y2="15"/><line x1="8" y1="24" x2="40" y2="24"/><line x1="8" y1="33" x2="40" y2="33"/></svg>
             </button>
           </div>
-          <div class="search-history" id="searchHistory" role="listbox" aria-label="近期搜索"></div>
+          <div class="search-history" id="searchHistory" role="listbox" data-i18n-aria="aria.history" aria-label="近期搜索"></div>
         </div>
       </div>
       <div class="statusrow">
         <div id="status"></div>
-        <div class="credit">Designed and Created by ZhengHao</div>
+        <div class="credit">Made by majiamia-dotcom</div>
       </div>
       <div class="results" id="rows"></div>
     </div>
   </div>
-  <div class="appver">v1.1.1</div>
+  <div class="appver">v1.2.0</div>
 
   <div class="scrim" id="scrim"></div>
   <div class="folderpanel" id="folderPanel">
-    <div class="fp-title">搜索范围 <button class="fp-close" id="fpClose" title="关闭">✕</button></div>
-    <div class="fp-sub">勾选要参与搜索的文件夹（可多选）</div>
+    <div class="fp-title"><span data-i18n="panel.title">搜索范围</span> <button class="fp-close" id="fpClose" data-i18n-title="title.close" title="关闭">✕</button></div>
+    <div class="fp-sub" data-i18n="panel.sub">勾选要参与搜索的文件夹（可多选）</div>
     <div class="fp-list" id="folderList"></div>
     <div class="fp-types">
-      <div class="fp-sub" style="margin-bottom:6px">按文件类型筛选（默认全选，可只看其中 1–2 类）</div>
+      <div class="fp-sub" style="margin-bottom:6px" data-i18n="panel.typeFilter">按文件类型筛选（默认全选，可只看其中 1–2 类）</div>
       <div class="typegrid" id="typeGrid">
-        <label class="tchk"><input type="checkbox" class="typeChk" value="red" checked /><span class="ftag t-red">红头文件</span></label>
-        <label class="tchk"><input type="checkbox" class="typeChk" value="law" checked /><span class="ftag t-law">法规条例</span></label>
-        <label class="tchk"><input type="checkbox" class="typeChk" value="spec" checked /><span class="ftag t-spec">规范指南</span></label>
-        <label class="tchk"><input type="checkbox" class="typeChk" value="plan" checked /><span class="ftag t-plan">规划计划</span></label>
-        <label class="tchk"><input type="checkbox" class="typeChk" value="journal" checked /><span class="ftag t-journal">学术期刊</span></label>
-        <label class="tchk"><input type="checkbox" class="typeChk" value="normal" checked /><span class="ftag t-normal">普通文件</span></label>
+        <label class="tchk"><input type="checkbox" class="typeChk" value="red" checked /><span class="ftag t-red" data-i18n="type.red">红头文件</span></label>
+        <label class="tchk"><input type="checkbox" class="typeChk" value="law" checked /><span class="ftag t-law" data-i18n="type.law">法规条例</span></label>
+        <label class="tchk"><input type="checkbox" class="typeChk" value="spec" checked /><span class="ftag t-spec" data-i18n="type.spec">规范指南</span></label>
+        <label class="tchk"><input type="checkbox" class="typeChk" value="plan" checked /><span class="ftag t-plan" data-i18n="type.plan">规划计划</span></label>
+        <label class="tchk"><input type="checkbox" class="typeChk" value="journal" checked /><span class="ftag t-journal" data-i18n="type.journal">学术期刊</span></label>
+        <label class="tchk"><input type="checkbox" class="typeChk" value="normal" checked /><span class="ftag t-normal" data-i18n="type.normal">普通文件</span></label>
       </div>
-      <div class="fp-tip">系统按文件名自动归类；在结果列表中点击类型标签即可手动改归类。</div>
+      <div class="fp-tip" data-i18n="panel.typeTip">系统按文件名自动归类；在结果列表中点击类型标签即可手动改归类。</div>
     </div>
     <div class="fp-adv">
       <label><input type="checkbox" id="ocrChk" />
-        <div>图片 / 扫描件 OCR（较慢）<small>开启后索引 JPG、PNG、TIFF 等图片，并识别扫描版 PDF；全程离线</small></div></label>
+        <div><span data-i18n="adv.ocr">图片 / 扫描件 OCR（较慢）</span><small data-i18n="adv.ocrSub">开启后索引 JPG、PNG、TIFF 等图片，并识别扫描版 PDF；全程离线</small></div></label>
       <label><input type="checkbox" id="titleChk" />
-        <div>搜索结果包含标题 / 目录<small>默认只显示正文命中；勾选后连标题、目录一并显示</small></div></label>
+        <div><span data-i18n="adv.title">搜索结果包含标题 / 目录</span><small data-i18n="adv.titleSub">默认只显示正文命中；勾选后连标题、目录一并显示</small></div></label>
       <div class="hkrow">
-        <div style="font-size:13px;color:var(--text-soft)">全局呼出快捷键</div>
-        <button id="hotkeyBtn" class="hkbtn" title="点击后按下新的组合键">⌘ ⇧ Space</button>
+        <div style="font-size:13px;color:var(--text-soft)" data-i18n="adv.hotkey">全局呼出快捷键</div>
+        <button id="hotkeyBtn" class="hkbtn" data-i18n-title="title.hotkeyBtn" title="点击后按下新的组合键">⌘ ⇧ Space</button>
       </div>
-      <div class="ob-guide-link"><button id="guideBtn" type="button">📘 查看使用指南</button></div>
+      <div class="hkrow">
+        <div style="font-size:13px;color:var(--text-soft)" data-i18n="adv.lang">界面语言</div>
+        <select id="langSel" class="hkbtn" style="appearance:auto;text-align:left">
+          <option value="zh">中文</option>
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+          <option value="es">Español</option>
+        </select>
+      </div>
+      <div class="ob-guide-link"><button id="guideBtn" type="button" data-i18n="adv.guide">📘 查看使用指南</button></div>
     </div>
   </div>
 
@@ -405,10 +414,11 @@
       <div class="tour-title" id="tourTitle"></div>
       <div class="tour-text" id="tourText"></div>
       <div class="tour-wait" id="tourWait"></div>
-      <button class="tour-skip" id="tourSkip" type="button">暂不引导</button>
+      <button class="tour-skip" id="tourSkip" type="button" data-i18n="tour.skip">暂不引导</button>
     </div>
   </div>
 
+  <script src="i18n.js"></script>
   <script src="renderer.js"></script>
 </body>
 </html>

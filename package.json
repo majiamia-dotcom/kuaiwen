@@ -1,6 +1,6 @@
 {
   "name": "doc-search",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "本地文档内容搜索器 - 搜的是文件里的字，不是文件名",
   "homepage": "https://kuaiwen.local",
   "main": "main.js",
@@ -59,7 +59,8 @@
       "engine/**/*",
       "assets/tray.png",
       "assets/tray@2x.png",
-      "assets/icon.png"
+      "assets/icon.png",
+      "i18n.js"
     ],
     "asarUnpack": [
       "engine/**",
@@ -86,7 +87,8 @@
         "assets/tray@2x.png",
         "assets/icon.png",
         "!node_modules/@napi-rs/canvas-win32-*/**",
-        "!node_modules/@napi-rs/canvas-linux-*/**"
+        "!node_modules/@napi-rs/canvas-linux-*/**",
+        "i18n.js"
       ]
     },
     "win": {
@@ -104,7 +106,8 @@
         "assets/tray@2x.png",
         "assets/icon.png",
         "!node_modules/@napi-rs/canvas-darwin-*/**",
-        "!node_modules/@napi-rs/canvas-linux-*/**"
+        "!node_modules/@napi-rs/canvas-linux-*/**",
+        "i18n.js"
       ]
     },
     "nsis": {
@@ -134,7 +137,8 @@
         "assets/tray@2x.png",
         "assets/icon.png",
         "!node_modules/@napi-rs/canvas-darwin-*/**",
-        "!node_modules/@napi-rs/canvas-win32-*/**"
+        "!node_modules/@napi-rs/canvas-win32-*/**",
+        "i18n.js"
       ]
     }
   }

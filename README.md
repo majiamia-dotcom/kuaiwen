@@ -1,125 +1,92 @@
-# 快文 QuickDocs
+# QuickDocs (快文)
 
-快文是一款纯本地、离线运行的桌面文档正文搜索工具。它面向政企机关、文秘和技术人员，重点解决“记得文件里写过，但不知道文件在哪里”的问题。
+**Search what's *inside* your documents — fully offline, local-first, no account, no upload.**
 
-本目录是项目唯一开发主线。原 `DocSearch/` 内容已经提升到当前目录；历史 DocPivot 试验代码不属于本产品主线。
+QuickDocs is a desktop search tool that indexes the **content** of your files, not just their names. Built for anyone who thinks *"I know I wrote this somewhere… but which file?"* — government and enterprise offices, secretaries, engineers, researchers.
 
-## 当前版本
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux-lightgrey)]()
+[![UI languages](https://img.shields.io/badge/UI-%E4%B8%AD%E6%96%87%20%7C%20English%20%7C%20Fran%C3%A7ais%20%7C%20Espa%C3%B1ol-green)]()
+[中文介绍](#中文介绍) · [Download 下载](https://github.com/majiamia-dotcom/quickdocs/releases)
 
-- 工作区版本：`1.1.1`
-- Electron：`44`
-- 界面：原生 HTML / CSS / JavaScript
-- 索引：纯 JavaScript 倒排索引，磁盘持久化
-- 中文搜索：二元分词 + 段落级精确校验
-- 数据原则：本地运行、不上传、不后台全盘扫描
+## Features
 
-## 已实现能力
-
-- 多材料库文件夹递归扫描和增量更新
-- worker 线程池并行解析与分词
-- 索引分代事务写入、损坏校验、正文懒加载和 LRU 缓存
-- TXT、CSV、Markdown、DOCX、PDF、OFD、DOC、WPS、PPTX/PPTM/PPSX/POTX、XLSX/XLSM 文本提取
-- 图片与扫描件 OCR（JPG/PNG/BMP/WebP/TIFF；Tesseract.js，强制使用本地中英文语言包）
-- 多关键词段落级 AND 搜索、关键词高亮
-- 红头、法规、规范、规划、学术期刊、普通文件分类
-- 默认按文件修改时间由近到远；可切换文内发布/出版时间，并允许手动修正日期和类型
-- macOS、Windows x64、Linux/麒麟打包配置
-- 跟随真实控件推进的四步首次使用引导、近期搜索下拉、托盘、单实例和全局快捷键
-
-## 目录
-
-```text
-assets/       应用图标、托盘图标和安装器资源
-engine/       解析、OCR、索引、搜索和持久化引擎
-promo/        宣传片脚本、文案和本机渲染产物
-界面设计/     Illustrator、SVG 和界面参考稿
-示例文档/     本地功能演示样本
-main.js       Electron 主进程
-preload.js    安全上下文桥
-renderer.js   页面交互和结果渲染
-index.html    页面结构及样式
-CLAUDE.md     详细开发交接、平台打包经验和已知问题
-运行说明.md   面向使用者的启动与操作说明
-```
-
-`promo/export/` 中的 MP4、WAV、PNG、JPG 成片和渲染帧保留在本机，但不进入 Git；宣传脚本、文案、HTML/CSS 舞台文件进入版本管理。
-
-## 开发启动
-
-首次准备依赖：
-
-```bash
-npm ci
-```
-
-随后启动：
-
-```bash
-npm start
-```
-
-macOS 也可以双击 `启动.command`。OCR 离线语言包放在 `langs/`，该目录不进入 Git。
-
-## 基础检查
-
-无需安装依赖即可先检查 JavaScript 语法：
-
-```bash
-node --check main.js
-node --check preload.js
-node --check renderer.js
-for file in engine/*.js; do node --check "$file"; done
-```
-
-Electron 界面验证、跨平台打包流程以及 Windows/麒麟注意事项见 `CLAUDE.md`。
-
-运行自动化回归测试：
-
-```bash
-npm test
-```
-
-打包前会自动检查 `langs/chi_sim.traineddata.gz` 和 `langs/eng.traineddata.gz`，缺失时停止构建，避免误发需要联网下载语言包的版本。
-构建脚本会兼容当前含空格和引号的开发路径；必要时先在系统临时目录打包，再分别复制到 `dist/macos/`、`dist/windows-x64/`。
-
-## 当前交付注意事项
-
-- `node_modules/` 和 `dist/` 不进入 Git，依赖与安装包需在本机重新生成。
-- Windows x64 和麒麟 Linux 仍应在真实机器进行最终冒烟。
-- macOS 尚未公证，Windows 尚未代码签名。
-- 图片只有在设置中开启 OCR 后才进入索引，避免默认扫描照片库导致长时间等待。
-- OCR 会逐页补识别混合型 PDF 中的扫描页，单份文件最多处理 30 个扫描页；结果仍需用原文件复核。
-
----
-
-# QuickDocs (快文) — English
-
-**QuickDocs is a fully offline, local-first desktop search tool for the *content* of your documents** — it searches what is written inside files, not just file names. Built for secretaries, government/enterprise offices, engineers and anyone who thinks *"I know I wrote this somewhere… but which file?"*
-
-> ⚠️ The user interface is currently Chinese-only. An English UI is planned for a future release. The search engine and OCR already handle English documents.
-
-## Why QuickDocs
-
-- **100% offline & private**: indexing, search and OCR all run locally. No upload, no account, no background full-disk scanning.
-- **Real content search**: recursive multi-folder indexing with incremental updates; pure-JavaScript inverted index persisted on disk.
-- **Wide format support**: TXT, CSV, Markdown, DOCX, PDF, OFD, DOC, WPS, PPTX/PPTM/PPSX/POTX, XLSX/XLSM text extraction.
-- **Offline OCR** (Tesseract.js, bundled Chinese + English language data): JPG/PNG/BMP/WebP/TIFF and scanned PDF pages.
+- **100% offline & private** — indexing, search and OCR all run locally. Nothing leaves your machine; no background full-disk scanning.
+- **Real content search** — recursive multi-folder indexing with incremental updates; pure-JavaScript inverted index persisted on disk.
+- **Wide format support** — TXT, CSV, Markdown, DOCX, PDF, OFD, DOC, WPS, PPTX/PPTM/PPSX/POTX, XLSX/XLSM.
+- **Offline OCR** — JPG/PNG/BMP/WebP/TIFF and scanned PDF pages, via bundled Tesseract.js Chinese + English language data. No network fallback, ever.
 - **Multi-keyword paragraph-level AND search** with hit highlighting.
-- **Document classification**: formal notices, regulations, standards, plans, academic journals, general files; sort by file modification time or in-document publication date (manually correctable).
-- **Cross-platform**: macOS (Apple Silicon), Windows x64, Linux/Kylin packages.
+- **Multilingual UI** — 中文 / English / Français / Español, auto-detected from your system language, switchable in settings.
+- **Document classification** — official notices, laws & regulations, standards, plans, academic journals, general files (auto-detected, manually correctable).
+- **Cross-platform** — macOS (Apple Silicon), Windows x64, Linux/Kylin.
+- **Thoughtful details** — guided 4-step first-run tour, recent-searches dropdown, system tray, single-instance, global hotkey (customizable).
 
 ## Download
 
-Prebuilt installers are on the [Releases](../../releases) page. macOS build is not yet notarized and Windows build is not yet code-signed — you may need to allow the app in your OS security settings on first launch.
+Grab the latest installer from [**Releases**](https://github.com/majiamia-dotcom/quickdocs/releases):
+
+| Platform | File |
+|----------|------|
+| macOS (Apple Silicon) | `QuickDocs-*-macos-arm64.dmg` |
+| Windows x64 | `QuickDocs-*-windows-x64-setup.exe` |
+
+> The macOS build is not yet notarized and the Windows build is not yet code-signed. Your OS may warn about an unidentified developer on first launch — allow it in security settings.
 
 ## Build from source
 
 ```bash
 npm ci
 npm start        # run the app
+npm test         # engine tests
 npm run dist     # build installers (mac / win / linux)
 ```
 
+## Tech stack
+
+Electron · vanilla HTML/CSS/JS UI · custom JS inverted index with generational on-disk persistence · Tesseract.js offline OCR · pdfjs-dist with bundled CJK CMaps
+
+## Roadmap
+
+- [x] v1.1 — OCR for images & scanned PDFs, first-run guided tour, recent searches
+- [x] v1.2 — Multilingual UI (中文 / English / Français / Español)
+- [ ] Signed & notarized installers
+- [ ] Search history export, dark mode (on request)
+
 ## License
 
-MIT © 2026 majiamia-dotcom
+[MIT](LICENSE) © 2026 majiamia-dotcom
+
+---
+
+# 中文介绍
+
+**快文是一款纯本地、离线运行的桌面文档正文搜索工具**——搜的是文件里的字，不是文件名。面向政企机关、文秘和技术人员，解决"记得文件里写过，但不知道文件在哪里"的问题。
+
+## 功能特性
+
+- **完全离线**：索引、搜索、OCR 全部本地完成；不上传、不注册、不后台全盘扫描
+- **正文搜索**：多材料库文件夹递归扫描和增量更新；纯 JavaScript 倒排索引，磁盘持久化
+- **格式广泛**：TXT、CSV、Markdown、DOCX、PDF、OFD、DOC、WPS、PPTX 系列、XLSX 系列
+- **离线 OCR**：JPG/PNG/BMP/WebP/TIFF 图片与扫描版 PDF（内置中英文语言包，绝不联网回退）
+- **多关键词段落级 AND 搜索**、关键词高亮
+- **多语言界面**：中文 / English / Français / Español，跟随系统自动识别，可在设置中切换
+- **文件自动归类**：红头、法规、规范、规划、学术期刊、普通文件；可手动修正时间与类型
+- **跨平台**：macOS（Apple Silicon）、Windows x64、Linux/麒麟
+- **细节**：四步实操引导、近期搜索下拉、托盘常驻、单实例、可自定义全局呼出快捷键
+
+## 下载安装
+
+见 [Releases](https://github.com/majiamia-dotcom/quickdocs/releases) 页面。macOS 尚未公证、Windows 尚未签名，首次启动请在系统安全设置中允许。
+
+## 从源码构建
+
+```bash
+npm ci
+npm start        # 开发运行
+npm test         # 引擎测试
+npm run dist     # 打包安装包（mac / win / linux）
+```
+
+## 许可证
+
+[MIT](LICENSE) © 2026 majiamia-dotcom
